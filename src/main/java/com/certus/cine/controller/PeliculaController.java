@@ -1,6 +1,5 @@
 package com.certus.cine.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.certus.cine.dto.PeliculaDTO;
+import com.certus.cine.dto.PeliculaRespuesta;
 import com.certus.cine.service.PeliculaServicio;
 
 @RestController
@@ -26,7 +26,7 @@ public class PeliculaController {
 	private PeliculaServicio peliculaServicio;
 
 	@GetMapping()
-	 public List<PeliculaDTO> listarPeliculas(
+	 public PeliculaRespuesta listarPeliculas(
 			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int numeroDePagina, 
 	 		@RequestParam(value = "pageSize", defaultValue = "2", required = false)int medidaDePagina){
 		 return peliculaServicio.obtenerTodasLasPeliculas(numeroDePagina, medidaDePagina);

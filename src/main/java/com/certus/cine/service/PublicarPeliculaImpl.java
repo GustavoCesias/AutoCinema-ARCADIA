@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.certus.cine.dto.PeliculaDTO;
+import com.certus.cine.dto.PeliculaRespuesta;
 import com.certus.cine.entity.Pelicula;
 import com.certus.cine.repository.PeliculaRepository;
 import com.certus.cine.exceptions.ResourceNotFoundExceptions;
@@ -31,13 +32,23 @@ public class PublicarPeliculaImpl implements PeliculaServicio{
 	}
 
 	@Override
-	public List<PeliculaDTO> obtenerTodasLasPeliculas(int numeroDePagina, int medidaDePagina) {
+	public PeliculaRespuesta obtenerTodasLasPeliculas(int numeroDePagina, int medidaDePagina) {
 		Pageable pageable = PageRequest.of(numeroDePagina, medidaDePagina);
 
 		Page<Pelicula> peliculas = peliculaRepository.findAll(pageable);
 
 		List<Pelicula> listaDePeliculas = peliculas.getContent();
-		return listaDePeliculas.stream().map(pelicula -> mapearDTO(pelicula)).collect(Collectors.toList());
+		List<PeliculaDTO> contenido = listaDePeliculas.stream().map(pelicula -> mapearDTO(pelicula)).collect(Collectors.toList());
+	
+		PeliculaRespuesta peliculaRespuesta = new PeliculaRespuesta();
+		peliculaRespuesta.setContenido(contenido);
+		peliculaRespuesta.setNumeroPagina(peliculas.getNumber());
+		peliculaRespuesta.setMedidaPagina(peliculas.getSize());
+		peliculaRespuesta.setTotalElementos(peliculas.getTotalElements());
+		peliculaRespuesta.setTotalPaginas(peliculas.getTotalPages());
+		peliculaRespuesta.setUltima(peliculas.isLast());
+
+		return peliculaRespuesta;
 		
 	}
 	
