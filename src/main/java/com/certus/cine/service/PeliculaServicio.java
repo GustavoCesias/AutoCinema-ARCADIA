@@ -8,7 +8,7 @@ public interface PeliculaServicio {
 
 	public PeliculaDTO publicarPelicula(PeliculaDTO peliculaDTO);
 	
-	public List<PeliculaDTO> obtenerTodasLasPeliculas();
+	public List<PeliculaDTO> obtenerTodasLasPeliculas(int numeroDePagina, int medidaDePagina);
 	
 	public PeliculaDTO obtenerPeliculaPorId(long id);
 	

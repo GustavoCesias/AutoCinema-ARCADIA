@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.certus.cine.dto.PeliculaDTO;
@@ -28,9 +31,13 @@ public class PublicarPeliculaImpl implements PeliculaServicio{
 	}
 
 	@Override
-	public List<PeliculaDTO> obtenerTodasLasPeliculas() {
-		List<Pelicula> peliculas = peliculaRepository.findAll();
-		return peliculas.stream().map(pelicula -> mapearDTO(pelicula)).collect(Collectors.toList());
+	public List<PeliculaDTO> obtenerTodasLasPeliculas(int numeroDePagina, int medidaDePagina) {
+		Pageable pageable = PageRequest.of(numeroDePagina, medidaDePagina);
+
+		Page<Pelicula> peliculas = peliculaRepository.findAll(pageable);
+
+		List<Pelicula> listaDePeliculas = peliculas.getContent();
+		return listaDePeliculas.stream().map(pelicula -> mapearDTO(pelicula)).collect(Collectors.toList());
 		
 	}
 	
