@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.certus.cine.dto.PeliculaDTO;
@@ -32,8 +33,9 @@ public class PublicarPeliculaImpl implements PeliculaServicio{
 	}
 
 	@Override
-	public PeliculaRespuesta obtenerTodasLasPeliculas(int numeroDePagina, int medidaDePagina) {
-		Pageable pageable = PageRequest.of(numeroDePagina, medidaDePagina);
+	public PeliculaRespuesta obtenerTodasLasPeliculas(int numeroDePagina, int medidaDePagina, String ordenarPor, String sorDirt) {
+		Sort sort = sorDirt.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(ordenarPor).ascending():Sort.by(ordenarPor).descending();
+		Pageable pageable = PageRequest.of(numeroDePagina, medidaDePagina, sort);
 
 		Page<Pelicula> peliculas = peliculaRepository.findAll(pageable);
 
