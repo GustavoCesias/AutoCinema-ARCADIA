@@ -1,14 +1,21 @@
 package com.certus.cine.entity;
 
 import java.sql.Date;
+import java.util.HashSet;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+//import jakarta.persistence.JoinColumn;
+//import jakarta.persistence.JoinTable;
+//import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+
 
 @Entity
 @Table(name="peliculas", uniqueConstraints = {@UniqueConstraint(columnNames =   {"titulo"})})
@@ -38,6 +45,17 @@ public class Pelicula {
 
 	@Column(name = "duracion", nullable = false)
 	private int duracion;
+
+	/*@ManyToMany
+    @JoinTable(
+        name = "pelicula_funciones",
+        joinColumns = @JoinColumn(name = "pelicula_id"),
+        inverseJoinColumns = @JoinColumn(name = "funciones_id")
+    )
+    private HashSet<Funciones> funciones = new HashSet<>();*/
+	@OneToMany(mappedBy = "pelicula", cascade = CascadeType.ALL, orphanRemoval = true)
+	private HashSet<Funciones> funciones = new HashSet<>();
+
 
 	public Long getId() {
 		return id;
