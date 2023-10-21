@@ -63,8 +63,4 @@ public class PeliculaDTO {
 	public PeliculaDTO() {
 		super();
 	} 
-	
-	
-	
-	
 }

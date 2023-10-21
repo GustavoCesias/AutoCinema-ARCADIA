@@ -1,13 +1,16 @@
 package com.certus.cine.entity;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -41,7 +44,8 @@ public class Pelicula {
 	@Column(name = "duracion", nullable = false)
 	private int duracion;
 
-	
+	@OneToMany(mappedBy = "pelicula", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set <Funciones> funciones = new HashSet<>();
 
 	public Long getId() {
 		return id;
