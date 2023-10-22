@@ -18,9 +18,9 @@ public class FuncionesController {
     @Autowired
     private FuncionesServicio funcionesServicio;
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<FuncionesDTO> guardarFunciones(@RequestBody FuncionesDTO funcionesDTO){
         return new ResponseEntity<>(funcionesServicio.crearFuncion(funcionesDTO), HttpStatus.CREATED);
         
-    }
+    }*/
 }
